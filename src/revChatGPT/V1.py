@@ -396,16 +396,18 @@ def main(config):
                 break
         print("Chatbot: ")
         prev_text = ""
-        for data in chatbot.ask(
-            prompt,
-            conversation_id=chatbot.config.get("conversation"),
-            parent_id=chatbot.config.get("parent_id"),
-        ):
-            message = data["message"][len(prev_text) :]
-            print(message, end="", flush=True)
-            prev_text = data["message"]
-        print()
-        # print(message["message"])
+        try:
+            for data in chatbot.ask(
+                prompt,
+                conversation_id=chatbot.config.get("conversation"),
+                parent_id=chatbot.config.get("parent_id"),
+            ):
+                message = data["message"][len(prev_text) :]
+                print(message, end="", flush=True)
+                prev_text = data["message"]
+            print()
+        except Exception as e:
+            print("request error, please try again...")
 
 
 if __name__ == "__main__":
